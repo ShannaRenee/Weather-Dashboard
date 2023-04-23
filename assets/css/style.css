@@ -1,0 +1,51 @@
+* {
+    border: solid black 2px;
+}
+
+h1 {
+    text-align: center;
+    background-color: aquamarine;
+    
+}
+
+#container {
+    height: 520px;
+    /* width: 100%; */
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.box {
+    height: 500px;
+    width: 200px;
+    background-color: blueviolet;
+    margin: 10px;
+}
+
+#search {
+    width: 30%
+}
+
+#bigbox {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+#top {
+  width: 95%;
+}
+
+#bottom {
+    display: flex;
+    justify-content: space-around;
+   width: 95%;
+}
+
+
+.babyboxes {
+    height: 100%;
+    width: 200px;
+    background-color: aqua;
+}
