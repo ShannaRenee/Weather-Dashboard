@@ -39,6 +39,5 @@ function testFunction(data) {
     }
 
 function construct(data) {
-
-$('<div>')
+    today.text(cityName.val() + " " + dayjs().format('MM/DD/YYYY'));
 }
