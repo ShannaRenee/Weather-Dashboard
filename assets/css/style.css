@@ -33,6 +33,7 @@ h1 {
     width: 200px;
     /* background-color: blueviolet; */
     margin: 10px;
+    /* border: 2px solid black; */
 }
 
 #search {
@@ -44,7 +45,7 @@ h1 {
     border: solid
 }
 
-h2 {
+#search h2 {
     text-align: center;
 }
 
@@ -66,6 +67,7 @@ input {
 
 #top {
   width: 95%;
+  font-size: larger;
 }
 
 #bottom {

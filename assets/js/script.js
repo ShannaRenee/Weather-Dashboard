@@ -1,5 +1,9 @@
 var cityName = $('#textbox')
 var button = $('button')
+var today = $('#today')
+var temp = $('#temp')
+var wind = $('#wind')
+var humidity = $('#humidity')
 
 
 button.on('click', start)
