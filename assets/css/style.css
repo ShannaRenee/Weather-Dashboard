@@ -20,9 +20,11 @@ h1 {
     
 }
 #textbox {
+    font-family: 'Comfortaa', cursive;
     background-color: aliceblue;
     height: 25px;
-    width: 300px
+    width: 300px;
+    border-radius: 10px;
 }
 
 #container {
@@ -56,9 +58,21 @@ h1 {
 }
 
 button {
+    font-family: 'Comfortaa', cursive;
+    color: antiquewhite;
+    height: 35px;
     width: 50%;
     align-self: center;
     margin: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    background-color: rgb(17, 65, 17);
+}
+
+button:hover {
+    background-color: rgb(168, 223, 168);
+    cursor: pointer;
+    color: rgb(17, 65, 17);
 }
 
 input {
