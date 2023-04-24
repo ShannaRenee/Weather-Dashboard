@@ -34,7 +34,6 @@ function start() {
             return response.json();
         })
         .then(function (data) {
-            // console.log(data)
             construct(data)
         })
 }
@@ -43,9 +42,19 @@ function start() {
 function construct(data) {
     //Displays city, current date, and current weather icon
     var iconNow = data.list[0].weather[0].main;
+    var currentTemp = data.list[0].main.temp;
+    var currentWind = data.list[0].wind.speed;
+    var currentHum =  data.list[0].main.humidity;
     today.text(cityName.val() + " " + dayjs().format('MM/DD/YYYY') + " ");
     today.append($('<span>').attr('class', conditions[iconNow]));
-    console.log(data)
+    // console.log(data)
+    //Current temp
+    temp.text("Current temp: " + currentTemp);
+    wind.text("Current wind speed: " + currentWind + " mph");
+    humidity.text("Current humidity level: " + currentHum + "%");
 
-}
+    }
 
+
+// for (let i = 0; i < data.list.length; i++) 
+//     console.log(data.list[i].dt_txt.split(' ')[1])
