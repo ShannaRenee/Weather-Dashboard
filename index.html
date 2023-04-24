@@ -16,12 +16,20 @@
         <h2>Search for a City:</h2>
         <input type="text" id="textbox" placeholder="enter city here"></imput>
         <button>Search</button>
+        <div id="prevSearch"></div>
     </div>
     <div id="bigbox">
-        <div class="box" id="top"></div>
+        <div class="box" id="top">
+            <h2>Todays Date:</h2>
+        </div>
         <h2>Five Day Forecast:</h2>
         <div class="box" id="bottom">
-            <div class="babyboxes"></div>
+            <div class="babyboxes">
+                <h2>date</h2>
+                <p>temp</p>
+                <p>wind</p>
+                <p>humidity</p>
+            </div>
             <div class="babyboxes"></div>
             <div class="babyboxes"></div>
             <div class="babyboxes"></div>
@@ -30,7 +38,7 @@
         </div>
     </div>
 </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ h1 {
 }
 
 #container {
-    height: 520px;
+    height: 700px;
     /* width: 100%; */
     display: flex;
     justify-content: space-around;
@@ -31,7 +31,7 @@ h1 {
 .box {
     height: 500px;
     width: 200px;
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     margin: 10px;
 }
 
@@ -39,6 +39,9 @@ h1 {
     width: 400px;
     display: flex;
     flex-direction: column;
+    background-color: rgb(131, 179, 131);
+    border-radius: 25px;
+    border: solid
 }
 
 h2 {
@@ -73,7 +76,12 @@ input {
 
 
 .babyboxes {
-    height: 100%;
+    height: 250px;
     width: 200px;
-    background-color: aqua;
+    background-color: rgb(144, 187, 140);
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgb(168, 223, 168);
+    padding: 20px;
+    font-size: larger;
+    font-weight: 400;
 }
