@@ -36,4 +36,5 @@ function testFunction(data) {
 
 function construct(data) {
 
-    }
+$('<div>')
+}
