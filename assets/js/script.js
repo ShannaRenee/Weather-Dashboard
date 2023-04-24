@@ -8,35 +8,19 @@ var humidity = $('#humidity')
 
 button.on('click', start)
 
-
 function start() {
-var location = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName.val() +
-"&appid=f935ee17441f16d1cfe096562d3793e1"
-
+    var location = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName.val() + 
+    "&appid=f935ee17441f16d1cfe096562d3793e1&units=imperial";
     fetch(location)
         .then(function (response) {
-            return response.json()
+            return response.json();
         })
         .then(function (data) {
-            testFunction(data);
+            console.log(data)
+            construct(data)
         })
-    }
+}
 
-
-function testFunction(data) {
-    var longitude = data[0].lon;
-    var latitude = data[0].lat;
-    var requestForecast = "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude +
-    "&lon=" + longitude + "&appid=f935ee17441f16d1cfe096562d3793e1&units=imperial";
-
-    fetch(requestForecast)
-        .then(function (response) {
-           return response.json()
-        })
-        .then(function (data) {
-            construct(data);
-         })
-    }
 
 function construct(data) {
     today.text(cityName.val() + " " + dayjs().format('MM/DD/YYYY'));
