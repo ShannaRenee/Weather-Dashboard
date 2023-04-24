@@ -11,8 +11,8 @@ var conditions = {
     'Drizzle': "fa-solid fa-cloud-showers-heavy",
     'Rain': "fa-solid fa-cloud-rain",
     'Snow': "fa-solid fa-snowflake fa-spin",
-    'Clear': "fa-solid fa-sun fa-bounce",
-    'Clouds': "fa-solid fa-cloud",
+    'Clear': "fa-solid fa-sun fa-spin",
+    'Clouds': "fa-solid fa-cloud fa-bounce",
     'Mist': "fa-solid fa-smog",
     'Smoke': "fa-solid fa-smog",
     'Haze': "fa-solid fa-smog",
@@ -47,9 +47,9 @@ function construct(data) {
     var currentHum =  data.list[0].main.humidity;
     today.text(cityName.val() + " " + dayjs().format('MM/DD/YYYY') + " ");
     today.append($('<span>').attr('class', conditions[iconNow]));
-    // console.log(data)
-    //Current temp
-    temp.text("Current temp: " + currentTemp);
+
+    //Current conditions
+    temp.text("Current temp: " + currentTemp + " °F");
     wind.text("Current wind speed: " + currentWind + " mph");
     humidity.text("Current humidity level: " + currentHum + "%");
 
