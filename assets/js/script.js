@@ -6,6 +6,24 @@ var wind = $('#wind')
 var humidity = $('#humidity')
 
 
+var conditions = {
+    'Thunderstorm': "fa-solid fa-cloud-bolt fa-shake",
+    'Drizzle': "fa-solid fa-cloud-showers-heavy",
+    'Rain': "fa-solid fa-cloud-rain",
+    'Snow': "fa-solid fa-snowflake fa-spin",
+    'Clear': "fa-solid fa-sun fa-bounce",
+    'Clouds': "fa-solid fa-cloud",
+    'Mist': "fa-solid fa-smog",
+    'Smoke': "fa-solid fa-smog",
+    'Haze': "fa-solid fa-smog",
+    'Dust': "fa-solid fa-smog",
+    'Fog': "fa-solid fa-smog",
+    'Sand': "fa-solid fa-smog",
+    'Ash': "fa-solid fa-smog",
+    'Squall': "fa-solid fa-wind fa-beat-fade",
+    'Tornado': "fa-solid fa-tornado fa-flip"
+}
+
 button.on('click', start)
 
 function start() {
@@ -16,12 +34,18 @@ function start() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data)
+            // console.log(data)
             construct(data)
         })
 }
 
 
 function construct(data) {
-    today.text(cityName.val() + " " + dayjs().format('MM/DD/YYYY'));
+    //Displays city, current date, and current weather icon
+    var iconNow = data.list[0].weather[0].main;
+    today.text(cityName.val() + " " + dayjs().format('MM/DD/YYYY') + " ");
+    today.append($('<span>').attr('class', conditions[iconNow]));
+    console.log(data)
+
 }
+
