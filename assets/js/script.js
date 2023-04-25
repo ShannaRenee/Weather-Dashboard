@@ -38,6 +38,7 @@ function start() {
         })
 }
 
+const days = [];
 
 function construct(data) {
     //Displays city, current date, and current weather icon
@@ -53,8 +54,29 @@ function construct(data) {
     wind.text("Current wind speed: " + currentWind + " mph");
     humidity.text("Current humidity level: " + currentHum + "%");
 
+    //This is the five day forecast
+    //Grabbing the forecast info for the days by the noon time
+    for (let i = 0; i < data.list.length; i++) {
+    var times = data.list[i].dt_txt.split(' ')[1];
+        if (times === "12:00:00") {
+        days.push(data.list[i]);
+        }}
+
+
+    for (let i = 0; i < days.length; i++) {
+        //Creating boxes and adding the styling to them,
+        // appending them to the bottom box
+        var box = $('<div>').attr('class', 'babyboxes');
+        $('#bottom').append(box);
+        //grabbing the date from each and setting it to format I like
+        //appending to each box
+        var date = days[i].dt_txt.split(' ')[0];
+        var newTime = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
+        box.append(newTime);
+        console.log(days)
     }
 
+}
 
-// for (let i = 0; i < data.list.length; i++) 
-//     console.log(data.list[i].dt_txt.split(' ')[1])
+    
+

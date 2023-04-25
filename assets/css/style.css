@@ -21,7 +21,7 @@ h1 {
 }
 #textbox {
     font-family: 'Comfortaa', cursive;
-    background-color: aliceblue;
+    background-color: antiquewhite;
     height: 25px;
     width: 300px;
     border-radius: 10px;
@@ -73,6 +73,7 @@ button:hover {
     background-color: rgb(168, 223, 168);
     cursor: pointer;
     color: rgb(17, 65, 17);
+    transition-duration: 0.4s;
 }
 
 input {
@@ -93,6 +94,7 @@ input {
   border: 2px solid rgb(144, 187, 140);
   border-radius: 25px;
   box-shadow: 5px 5px 5px rgb(168, 223, 168);
+  background-color: antiquewhite;
 }
 
 #bottom {
