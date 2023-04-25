@@ -1,10 +1,9 @@
-var cityName = $('#textbox')
 var button = $('button')
 var today = $('#today')
 var temp = $('#temp')
 var wind = $('#wind')
 var humidity = $('#humidity')
-
+var fiveForecast = $('#bottom')
 
 var conditions = {
     'Thunderstorm': "fa-solid fa-cloud-bolt fa-shake",
@@ -27,7 +26,9 @@ var conditions = {
 button.on('click', start)
 
 function start() {
-    var location = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName.val() + 
+const inputEntry = $('#textbox').val();
+    //fetching the weather data
+    var location = "http://api.openweathermap.org/data/2.5/forecast?q=" + inputEntry + 
     "&appid=f935ee17441f16d1cfe096562d3793e1&units=imperial";
     fetch(location)
         .then(function (response) {
@@ -38,15 +39,19 @@ function start() {
         })
 }
 
+//Array that holds the weather info for the next five days at noon
 const days = [];
 
 function construct(data) {
+const inputEntry = $('#textbox').val();
+var cityName = inputEntry.charAt(0).toUpperCase() + inputEntry.slice(1);
+
     //Displays city, current date, and current weather icon
     var iconNow = data.list[0].weather[0].main;
     var currentTemp = data.list[0].main.temp;
     var currentWind = data.list[0].wind.speed;
     var currentHum =  data.list[0].main.humidity;
-    today.text(cityName.val() + " " + dayjs().format('MM/DD/YYYY') + " ");
+    today.text(cityName + " " + dayjs().format('MM/DD/YYYY') + " ");
     today.append($('<span>').attr('class', conditions[iconNow]));
 
     //Current conditions
@@ -64,16 +69,29 @@ function construct(data) {
 
 
     for (let i = 0; i < days.length; i++) {
-        //Creating boxes and adding the styling to them,
-        // appending them to the bottom box
-        var box = $('<div>').attr('class', 'babyboxes');
-        $('#bottom').append(box);
+       //creating, styling and appending each box
+       var box = $('<div>').attr('class', 'babyboxes');
+       fiveForecast.append(box);
         //grabbing the date from each and setting it to format I like
         //appending to each box
         var date = days[i].dt_txt.split(' ')[0];
-        var newTime = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
-        box.append(newTime);
-        console.log(days)
+        var formattedDate = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
+        box.append(formattedDate);
+        //creating and appending the icons to each
+        var tinyIcon = days[i].weather[0].main;
+        box.append($('<span>').attr('class', conditions[tinyIcon]));
+        //adding temp
+        var tinyTemp = days[i].main.temp;
+        var showTinyTemp = $('<p>').text('Temp: ' + tinyTemp + ' °F');
+        box.append(showTinyTemp);
+        //adding wind
+        var tinyWind = days[i].wind.speed;
+        var showTinyWind = $('<p>').text('Wind: ' + tinyWind + ' mph');
+        box.append(showTinyWind);
+        //adding humidity
+        var tinyHum = days[i].main.humidity;
+        var showTinyHum = $('<p>').text('Humidity: ' + tinyHum + '%');
+        box.append(showTinyHum);
     }
 
 }

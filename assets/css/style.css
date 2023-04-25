@@ -25,6 +25,7 @@ h1 {
     height: 25px;
     width: 300px;
     border-radius: 10px;
+    text-transform: capitalize;
 }
 
 #container {
