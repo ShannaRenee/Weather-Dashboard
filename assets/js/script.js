@@ -7,8 +7,8 @@ var fiveForecast = $('#bottom')
 var babyboxesEL = $('.babyboxes')
 var searchContainer = $('#searchContainer')
 
+
 const days = [];
-const cityHolder = [];
 
 var conditions = {
     'Thunderstorm': "fa-solid fa-cloud-bolt fa-shake",
@@ -28,57 +28,59 @@ var conditions = {
     'Tornado': "fa-solid fa-tornado fa-flip"
 }
 
-button.on('click', start)
+
+function buttonClickHandler(event) {
+    var inputEntry = event.target.getAttribute('city-name');
+    // $('#textbox').val(inputEntry)
+    // console.log(input);
+        getAPI(inputEntry);
+    }
+    
+
 
 function start() {
+// grabbing the ciy the user typed in
+var inputEntry = $('#textbox').val();
+// capitalizes the first letter of the city input
+var cityName = inputEntry.charAt(0).toUpperCase() + inputEntry.slice(1);
 
+//only allows the last four searches to populate the search container
+if (searchContainer.children().length > 3) {
+    searchContainer.children().eq(3).remove();
+}
+//adds previous searches to the search container
 var query = $("<div>").attr('class', 'prevSearch');
-var city = $('<h2>').text($('#textbox').val());
+query.attr('city-name', inputEntry);
+var city = $('<h2>').text(cityName).attr('city-name', inputEntry);
 query.append(city);
 searchContainer.prepend(query);
-cityHolder.push(city.text());
-console.log(cityHolder);
+getAPI(inputEntry);
 
-if (cityHolder.length === 5) {
- cityHolder.shift();   
- query.append(city);
- searchContainer.prepend(query);
-    query.last().remove();
 }
 
-
-
-// if (babyboxesEL.length > 0) {
-//     for (let i = 0; i < babyboxes.length; i++) {
-//         babyboxesEL[i].empty();
-//     }}
-
-// fiveForecast.empty();
-
-const inputEntry = $('#textbox').val();
-    //fetching the weather data
-    var location = "http://api.openweathermap.org/data/2.5/forecast?q=" + inputEntry + 
-    "&appid=f935ee17441f16d1cfe096562d3793e1&units=imperial";
-    fetch(location)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            construct(data)
-        })
+//fetching the weather data
+function getAPI(inputEntry) { 
+var location = "http://api.openweathermap.org/data/2.5/forecast?q=" + inputEntry + 
+"&appid=f935ee17441f16d1cfe096562d3793e1&units=imperial";
+fetch(location)
+    .then(function (response) {
+         return response.json();
+     })
+     .then(function (data) {
+          construct(data)
+      })
 }
 
 
 
 function construct(data) {
-const inputEntry = $('#textbox').val();
-var cityName = inputEntry.charAt(0).toUpperCase() + inputEntry.slice(1);
-
     //Displays city, current date, and current weather icon
     var iconNow = data.list[0].weather[0].main;
     var currentTemp = data.list[0].main.temp;
     var currentWind = data.list[0].wind.speed;
     var currentHum =  data.list[0].main.humidity;
+    var cityName = data.city.name;
+    
     today.text(cityName + " " + dayjs().format('MM/DD/YYYY') + " ");
     today.append($('<span>').attr('class', conditions[iconNow]));
 
@@ -96,33 +98,36 @@ var cityName = inputEntry.charAt(0).toUpperCase() + inputEntry.slice(1);
         }}
 
 
-    for (let i = 0; i < days.length; i++) {
-       //creating, styling and appending each box
-       var box = $('<div>').attr('class', 'babyboxes');
-       fiveForecast.append(box);
-        //grabbing the date from each and setting it to format I like
-        //appending to each box
-        var date = days[i].dt_txt.split(' ')[0];
-        var formattedDate = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
-        box.append(formattedDate);
-        //creating and appending the icons to each
-        var tinyIcon = days[i].weather[0].main;
-        box.append($('<span>').attr('class', conditions[tinyIcon]));
-        //adding temp
-        var tinyTemp = days[i].main.temp;
-        var showTinyTemp = $('<p>').text('Temp: ' + tinyTemp + ' °F');
-        box.append(showTinyTemp);
-        //adding wind
-        var tinyWind = days[i].wind.speed;
-        var showTinyWind = $('<p>').text('Wind: ' + tinyWind + ' mph');
-        box.append(showTinyWind);
-        //adding humidity
-        var tinyHum = days[i].main.humidity;
-        var showTinyHum = $('<p>').text('Humidity: ' + tinyHum + '%');
-        box.append(showTinyHum);
-    }
-
+    // for (let i = 0; i < days.length; i++) {
+    //    //creating, styling and appending each box
+    //    var box = $('<div>').attr('class', 'babyboxes');
+    //    fiveForecast.append(box);
+    //     //grabbing the date from each and setting it to format I like
+    //     //appending to each box
+    //     var date = days[i].dt_txt.split(' ')[0];
+    //     var formattedDate = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
+    //     box.append(formattedDate);
+    //     //creating and appending the icons to each
+    //     var tinyIcon = days[i].weather[0].main;
+    //     box.append($('<span>').attr('class', conditions[tinyIcon]));
+    //     //adding temp
+    //     var tinyTemp = days[i].main.temp;
+    //     var showTinyTemp = $('<p>').text('Temp: ' + tinyTemp + ' °F');
+    //     box.append(showTinyTemp);
+    //     //adding wind
+    //     var tinyWind = days[i].wind.speed;
+    //     var showTinyWind = $('<p>').text('Wind: ' + tinyWind + ' mph');
+    //     box.append(showTinyWind);
+    //     //adding humidity
+    //     var tinyHum = days[i].main.humidity;
+    //     var showTinyHum = $('<p>').text('Humidity: ' + tinyHum + '%');
+    //     box.append(showTinyHum);
+    // }
+        
+$('#textbox').val(' ');
 }
 
     
+button.on('click', start)
+searchContainer.on('click', buttonClickHandler)
 
