@@ -50,12 +50,37 @@ h1 {
     flex-direction: column;
     background-color: rgb(131, 179, 131);
     border-radius: 25px;
-    border: solid
+    border: solid;
 }
 
 #search h2 {
     text-align: center;
     font-family: 'Comfortaa', cursive;
+}
+
+#searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.prevSearch {
+    height: 50px;
+    width: 90%;
+    background-color: rgb(17, 65, 17);
+    border: 2px solid black;
+    border-radius: 20px;
+    color: antiquewhite;
+    padding-bottom: 15px;
+    margin: 5px;
+}
+
+.prevSearch:hover {
+    background-color: rgb(168, 223, 168);
+    color: rgb(17, 65, 17);
+    cursor: pointer;
+    transition-duration: 0.4s;
 }
 
 button {

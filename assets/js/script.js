@@ -4,6 +4,11 @@ var temp = $('#temp')
 var wind = $('#wind')
 var humidity = $('#humidity')
 var fiveForecast = $('#bottom')
+var babyboxesEL = $('.babyboxes')
+var searchContainer = $('#searchContainer')
+
+const days = [];
+const cityHolder = [];
 
 var conditions = {
     'Thunderstorm': "fa-solid fa-cloud-bolt fa-shake",
@@ -26,6 +31,30 @@ var conditions = {
 button.on('click', start)
 
 function start() {
+
+var query = $("<div>").attr('class', 'prevSearch');
+var city = $('<h2>').text($('#textbox').val());
+query.append(city);
+searchContainer.prepend(query);
+cityHolder.push(city.text());
+console.log(cityHolder);
+
+if (cityHolder.length === 5) {
+ cityHolder.shift();   
+ query.append(city);
+ searchContainer.prepend(query);
+    query.last().remove();
+}
+
+
+
+// if (babyboxesEL.length > 0) {
+//     for (let i = 0; i < babyboxes.length; i++) {
+//         babyboxesEL[i].empty();
+//     }}
+
+// fiveForecast.empty();
+
 const inputEntry = $('#textbox').val();
     //fetching the weather data
     var location = "http://api.openweathermap.org/data/2.5/forecast?q=" + inputEntry + 
@@ -39,8 +68,7 @@ const inputEntry = $('#textbox').val();
         })
 }
 
-//Array that holds the weather info for the next five days at noon
-const days = [];
+
 
 function construct(data) {
 const inputEntry = $('#textbox').val();
