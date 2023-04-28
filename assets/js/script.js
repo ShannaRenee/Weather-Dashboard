@@ -7,6 +7,7 @@ var humidity = $('#humidity')
 var fiveForecast = $('#bottom')
 var babyboxesEL = $('.babyboxes')
 var searchContainer = $('#searchContainer')
+var currentCon = $('#top')
 
 
 const days = [];
@@ -26,7 +27,8 @@ var conditions = {
     'Sand': "fa-solid fa-smog",
     'Ash': "fa-solid fa-smog",
     'Squall': "fa-solid fa-wind fa-beat-fade",
-    'Tornado': "fa-solid fa-tornado fa-flip"
+    'Tornado': "fa-solid fa-tornado fa-flip",
+    'Moon': "fa-solid fa-moon"
 }
 
 
@@ -43,23 +45,37 @@ $(document).ready(function() {
     }
 })
 
+// clears the five forecast boxes at the bottom
+function clearForecast() {
+    fiveForecast.children().remove();
+    days.length = 0;
+    currentCon.children().empty();
+    $('h1 span').text(' ');
+    $('h1').css('background-color', 'rgb(131, 179, 131)');
+    $('h1').css('color', 'black');
+
+}
+
+//clears the local storage and removes the divs
 function clear() {
     localStorage.clear();
     searchContainer.children().remove();
 }
 
-
+//determines which div was clicked
 function buttonClickHandler(event) {
     var inputEntry = event.target.getAttribute('city-name');
-        getAPI(inputEntry);
-    }
+    fiveForecast.children().remove();
+    days.length = 0;
+    $('h1 span').text(' ');
+    $('h1').css('background-color', 'rgb(131, 179, 131)');
+    $('h1').css('color', 'black');
+    getAPI(inputEntry);
+}
     
 
 
 function start() {
-    if (fiveForecast.children().length !== 0) {
-        fiveForecast.children().remove();
-    } 
 // grabbing the ciy the user typed in
 var inputEntry = $('#textbox').val();
 // capitalizes the first letter of the city input
@@ -77,18 +93,14 @@ query.append(city);
 searchContainer.prepend(query);
 
 
-function setLS() {
+//Sets items to local storage with number up to 4
 for (let i = 1; i <= 4; i++) {
     if (localStorage.getItem([i]) === null) {
     localStorage.setItem([i], inputEntry);
+    getAPI(inputEntry);
     return;
     } 
-}
-
-        getAPI(inputEntry);
 }}
-
-
 
 //fetching the weather data
 function getAPI(inputEntry) { 
@@ -104,22 +116,35 @@ fetch(location)
 }
 
 
-
 function construct(data) {
-    //Displays city, current date, and current weather icon
+    //Grabbing info from the data
     var iconNow = data.list[0].weather[0].main;
     var currentTemp = data.list[0].main.temp;
     var currentWind = data.list[0].wind.speed;
     var currentHum =  data.list[0].main.humidity;
     var cityName = data.city.name;
     
+    // Displays the current conditions
     today.text(cityName + " " + dayjs().format('MM/DD/YYYY') + " ");
-    today.append($('<span>').attr('class', conditions[iconNow]));
 
-    //Current conditions
+    //If it's after 6pm the icon will be a moon
+    if (dayjs().format('HH') >= '18') {
+    today.append($('<span>').attr('class', conditions.Moon));
+    } else {
+        today.append($('<span>').attr('class', conditions[iconNow]));
+    }
+
     temp.text("Current temp: " + currentTemp + " °F");
     wind.text("Current wind speed: " + currentWind + " mph");
     humidity.text("Current humidity level: " + currentHum + "%");
+    
+    //Easter egg, adds cactus emoji when Tucson is searched
+    if (cityName === 'Tucson') {
+        $('h1 span').text('🌵');
+        $('h1').css('background-color', 'rgb(17, 65, 17)');
+        $('h1').css('color', 'antiquewhite');
+
+    }
 
     //This is the five day forecast
     //Grabbing the forecast info for the days by the noon time
@@ -134,11 +159,10 @@ function construct(data) {
        var box = $('<div>').attr('class', 'babyboxes');
        fiveForecast.append(box);
         //grabbing the date from each and setting it to format I like
-        //appending to each box
         var date = days[i].dt_txt.split(' ')[0];
         var formattedDate = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
         box.append(formattedDate);
-        //creating and appending the icons to each
+        //creating and appending the info to each
         var tinyIcon = days[i].weather[0].main;
         box.append($('<span>').attr('class', conditions[tinyIcon]));
         //adding temp
@@ -153,14 +177,13 @@ function construct(data) {
         var tinyHum = days[i].main.humidity;
         var showTinyHum = $('<p>').text('Humidity: ' + tinyHum + '%');
         box.append(showTinyHum);
-
     }
+    //clears the input value
+   $('#textbox').val(' ');
         
-// $('#textbox').val(' ');
 }
 
     
 button.on('click', start)
 clearBtn.on('click', clear)
 searchContainer.on('click', buttonClickHandler)
-

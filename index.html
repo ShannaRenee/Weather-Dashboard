@@ -22,13 +22,13 @@
 </head>
 <body>
 
-    <h1>Weather Dashboard</h1>
+    <h1><span></span>Weather Dashboard<span></span></h1>
 
 
 <div id="container">
     <div class="box" id="search">
         <h2>Search for a City:</h2>
-        <input type="text" id="textbox" placeholder="enter city here"></input>
+        <input type="text" id="textbox" onclick="clearForecast()" placeholder="enter city here"></input>
         <button id="searchBtn">Search</button>
         <button id="clear">Clear Previous Searches</button>
         <div id="searchContainer"></div>
