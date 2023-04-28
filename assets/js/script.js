@@ -1,4 +1,5 @@
-var button = $('button')
+var button = $('#searchBtn')
+var clearBtn = $('#clear')
 var today = $('#today')
 var temp = $('#temp')
 var wind = $('#wind')
@@ -29,16 +30,36 @@ var conditions = {
 }
 
 
+$(document).ready(function() {
+    for (let i = 1; i <= 4; i++) {
+        if (localStorage.getItem([i]) !== null) {
+        var get = localStorage.getItem([i]);
+        var query = $("<div>").attr('class', 'prevSearch');
+        query.attr('city-name', get);
+        var city = $('<h2>').text(get).attr('city-name', get);
+        query.append(city);
+        searchContainer.prepend(query);
+        }
+    }
+})
+
+function clear() {
+    localStorage.clear();
+    searchContainer.children().remove();
+}
+
+
 function buttonClickHandler(event) {
     var inputEntry = event.target.getAttribute('city-name');
-    // $('#textbox').val(inputEntry)
-    // console.log(input);
         getAPI(inputEntry);
     }
     
 
 
 function start() {
+    if (fiveForecast.children().length !== 0) {
+        fiveForecast.children().remove();
+    } 
 // grabbing the ciy the user typed in
 var inputEntry = $('#textbox').val();
 // capitalizes the first letter of the city input
@@ -54,9 +75,20 @@ query.attr('city-name', inputEntry);
 var city = $('<h2>').text(cityName).attr('city-name', inputEntry);
 query.append(city);
 searchContainer.prepend(query);
-getAPI(inputEntry);
 
+
+function setLS() {
+for (let i = 1; i <= 4; i++) {
+    if (localStorage.getItem([i]) === null) {
+    localStorage.setItem([i], inputEntry);
+    return;
+    } 
 }
+
+        getAPI(inputEntry);
+}}
+
+
 
 //fetching the weather data
 function getAPI(inputEntry) { 
@@ -97,37 +129,38 @@ function construct(data) {
         days.push(data.list[i]);
         }}
 
+    for (let i = 0; i < days.length; i++) {
+       //creating, styling and appending each box
+       var box = $('<div>').attr('class', 'babyboxes');
+       fiveForecast.append(box);
+        //grabbing the date from each and setting it to format I like
+        //appending to each box
+        var date = days[i].dt_txt.split(' ')[0];
+        var formattedDate = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
+        box.append(formattedDate);
+        //creating and appending the icons to each
+        var tinyIcon = days[i].weather[0].main;
+        box.append($('<span>').attr('class', conditions[tinyIcon]));
+        //adding temp
+        var tinyTemp = days[i].main.temp;
+        var showTinyTemp = $('<p>').text('Temp: ' + tinyTemp + ' °F');
+        box.append(showTinyTemp);
+        //adding wind
+        var tinyWind = days[i].wind.speed;
+        var showTinyWind = $('<p>').text('Wind: ' + tinyWind + ' mph');
+        box.append(showTinyWind);
+        //adding humidity
+        var tinyHum = days[i].main.humidity;
+        var showTinyHum = $('<p>').text('Humidity: ' + tinyHum + '%');
+        box.append(showTinyHum);
 
-    // for (let i = 0; i < days.length; i++) {
-    //    //creating, styling and appending each box
-    //    var box = $('<div>').attr('class', 'babyboxes');
-    //    fiveForecast.append(box);
-    //     //grabbing the date from each and setting it to format I like
-    //     //appending to each box
-    //     var date = days[i].dt_txt.split(' ')[0];
-    //     var formattedDate = $('<h2>').text(dayjs(date).format('MM/DD/YYYY'));
-    //     box.append(formattedDate);
-    //     //creating and appending the icons to each
-    //     var tinyIcon = days[i].weather[0].main;
-    //     box.append($('<span>').attr('class', conditions[tinyIcon]));
-    //     //adding temp
-    //     var tinyTemp = days[i].main.temp;
-    //     var showTinyTemp = $('<p>').text('Temp: ' + tinyTemp + ' °F');
-    //     box.append(showTinyTemp);
-    //     //adding wind
-    //     var tinyWind = days[i].wind.speed;
-    //     var showTinyWind = $('<p>').text('Wind: ' + tinyWind + ' mph');
-    //     box.append(showTinyWind);
-    //     //adding humidity
-    //     var tinyHum = days[i].main.humidity;
-    //     var showTinyHum = $('<p>').text('Humidity: ' + tinyHum + '%');
-    //     box.append(showTinyHum);
-    // }
+    }
         
-$('#textbox').val(' ');
+// $('#textbox').val(' ');
 }
 
     
 button.on('click', start)
+clearBtn.on('click', clear)
 searchContainer.on('click', buttonClickHandler)
 
