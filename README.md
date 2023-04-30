@@ -1,8 +1,9 @@
 # Weather-Dashboard
 
-![Alt text](../../../OneDrive/Desktop/snippets/Screenshot%202023-04-27%20234617.jpg)
 
+![Screenshot 2023-04-27 234617](https://user-images.githubusercontent.com/126972906/235075128-37c96903-1e16-4eac-b6e6-2e4cf5f082cf.jpg)
 
+https://shannarenee.github.io/Weather-Dashboard/
 
 ## Description
 My motivation to make this weather dashboard was inspired by my desire to implement all of the new coding skills
