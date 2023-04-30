@@ -104,7 +104,7 @@ for (let i = 1; i <= 4; i++) {
 
 //fetching the weather data
 function getAPI(inputEntry) { 
-var location = "http://api.openweathermap.org/data/2.5/forecast?q=" + inputEntry + 
+var location = "https://api.openweathermap.org/data/2.5/forecast?q=" + inputEntry + 
 "&appid=f935ee17441f16d1cfe096562d3793e1&units=imperial";
 fetch(location)
     .then(function (response) {
